@@ -1,0 +1,4 @@
+set completion-ignore-case on
+
+"\e[5~": history-substr-search-forward
+"\e[6~": history-substr-search-backward
