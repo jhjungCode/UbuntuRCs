@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon=/home/cfd/anaconda2/pkgs/qtconsole-4.2.0-py27_0/info/icon.png
+Name=Jupyter Notebook
+Exec=/home/cfd/UbuntuRCs/bin/jupyterServer
+Name[ko]=jupyter

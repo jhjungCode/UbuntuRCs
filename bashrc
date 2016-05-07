@@ -110,7 +110,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # add ~/bin path
-export PATH=$PATH:~/bin
+export PATH=$PATH:~/UbuntuRCs/bin
 
 #source /home/cfd/OpenFOAM/OpenFOAM-1.6-ext/etc/bashrc
 #source /home/cfd/OpenFOAM/foam-extend-3.1/etc/bashrc
@@ -118,16 +118,15 @@ export PATH=$PATH:~/bin
 #source /opt/openfoam230/etc/bashrc
 #source /home/cfd/OpenFOAM/OpenFOAM-2.3.x/etc/bashrc
 
-
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 
 #source /$HOME/OpenFOAM/OpenFOAM-2.3.x/etc/bashrc $FOAM_SETTINGS
 #source /$HOME/foam/foam-extend-3.1/etc/bashrc $FOAM_SETTINGS
-#source /$HOME/foam/foam-extend-3.2/etc/bashrc $FOAM_SETTINGS
+source /$HOME/foam/foam-extend-3.2/etc/bashrc $FOAM_SETTINGS
 
 #alias of23x='source /$HOME/OpenFOAM/OpenFOAM-2.3.x/etc/bashrc $FOAM_SETTINGS'
 #alias fe31='source /$HOME/OpenFOAM/foam-extend-3.1/etc/bashrc $FOAM_SETTINGS'
-alias fe32='source /$HOME/foam/foam-extend-3.2/etc/bashrc $FOAM_SETTINGS'
+#alias fe32='source /$HOME/foam/foam-extend-3.2/etc/bashrc $FOAM_SETTINGS'
 alias tmux='tmux -2' #to support 256 color in terminal
 
 #export WM_COMPILE_OPTION=Debug
@@ -137,9 +136,8 @@ export WM_NCOMPPROCS=4
 #export WM_NCOMPPROCS=$($WM_SCHEDULER -count)
 #export WM_COLOURS="black blue green cyan red magenta yellow" 
 
+# added by Anaconda2 2.4.0 installer
+#export PATH="/home/cfd/anaconda2/bin:$PATH"
 
 # added by Anaconda3 2.4.0 installer
 export PATH="/home/cfd/anaconda3/bin:$PATH"
-
-# added by Anaconda2 2.4.0 installer
-#export PATH="/home/cfd/anaconda2/bin:$PATH"
