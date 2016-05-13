@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=/opt/CD-adapco/STAR-CCM+11.02.010/star/bin/starccm+ -mpi openmpi -locale en
+Name=STAR-CCM+
+Name[ko]=STAR-CCM+
+Icon=java-lang-thread.png
