@@ -1,0 +1,2 @@
+sudo cp -r Window /usr/share/fonts/truetype/
+sudo fc-cache -vf

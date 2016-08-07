@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # coding: utf-8
 import numpy as np
 import re, os
@@ -37,7 +37,7 @@ Y = Datas['r'][0]*np.sin(Datas['theta'][0])
 xi, xstep = np.linspace(X.min(), X.max(), 50, retstep=True)
 yi, ystep = np.linspace(Y.min(), Y.max(), 50, retstep=True)
 XI, YI = np.meshgrid(xi, yi)
-
+print(X.min(), X.max())
 #rbf = Rbf(X, Y, sumData)
 #ZI = rbf(XI, YI)
 #ZI = griddata(np.array((X, Y)).T, sumData, (XI, YI), method='nearest')
@@ -67,8 +67,10 @@ im = plt.imshow(ZI, extent=(XI.min(), XI.max(), YI.min(), YI.max()), origin='upp
 #im = plt.imshow(ZI, extent=(XI.min(), XI.max(), YI.min(), YI.max()), origin='lower')
 #im.set_clip_path(circle)
 plt.title('cumulative NH3UI : {:.2f}'.format(UI))
-plt.xlim(XI.min()*1.2, XI.max()*1.2)
-plt.ylim(YI.min()*1.2, YI.max()*1.2)
+X_mean = (XI.min() + XI.max())/2
+Y_mean = (YI.min() + YI.max())/2
+plt.xlim((XI.min() - X_mean)*1.2 + X_mean, (XI.max() - X_mean)*1.2 + X_mean)
+plt.ylim((YI.min() - Y_mean)*1.2 + Y_mean, (YI.max() - Y_mean)*1.2 + Y_mean)
 plt.clim(min(0,sumData.min()), sumData.max())
 #plt.clim(min(0,sumData.min()), 0.4)
 plt.colorbar()
