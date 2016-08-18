@@ -16,7 +16,7 @@ def main():
              screen.get_monitor_geometry(monitor).y])
 
     if DEBUG:
-        print monitors
+        print(monitors)
 
     active_window = screen.get_active_window()
     active_window_location = screen.get_monitor_at_window(active_window)
@@ -27,7 +27,7 @@ def main():
         new_location = 0
     new_screen = monitors[new_location]
     if DEBUG:
-        print new_screen
+        print(new_screen)
 
     active_window.move(new_screen[0], new_screen[1])
     screen.get_active_window()
