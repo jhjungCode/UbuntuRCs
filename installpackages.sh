@@ -2,6 +2,10 @@
 
 sudo apt-get install git-core build-essential binutils-dev flex \
 bison zlib1g-dev qt4-dev-tools libqt4-dev libncurses5-dev libiberty-dev \
-libxt-dev rpm mercurial graphviz vim
+libxt-dev rpm mercurial graphviz vim screen silversearcher-ag xdotool \
+wmctrl xsel
+
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 

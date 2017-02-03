@@ -1,0 +1,42 @@
+#!/bin/bash
+# bash로 스크립트 실행함.
+# 실행경로가 설정된 곳에서 이 파일(eg. ~/bin/ipn)을 만들고  chmod +x ipn 으로 실행속성을 부여함. 다음에 /usr/share/applications/ipn.desktop를 생성시켜 GUI상 실행아이콘을 만듬.
+
+echo " Starting jupyter notebook..."
+screen -dmS "jupyter_$cwd" jupyter-notebook "$@"
+#function ipnb() {
+    #cwd=${PWD##*/}
+## 예제 : B="/usr/local/doc/somefile.txt"
+## '#'와 '##' : 시작으로부터 일치하는 패턴을 제거함. 최소한(#)  최대한(##)
+## A=${B##*/} : A = "somefile.txt"
+## A=${B#*/} : A = "usr/local/doc/somefile.txt"
+## '%'와 '%%' : 끝으로부터 일치하는 패턴을 제거함. 최소한(%)  최대한(%%)
+## A=${B%%/*} : A = "" 
+## A=${B%/*} : A = "/usr/local/doc"
+    #screen -dmS "jupyter_$cwd" jupyter-notebook "$@"
+## screen -d : 분리(detach)
+## screen -m : $STY 변수 무시, 신규 screen 섹션 생성
+## screen -S : 소켓이름 설정
+## "$@" bash 매개변수를 의미 : 큰따옴표로 묶은 N개의 독립된 문자열(공백으로 구분) 즉, "$1" "$2" ... "$N"
+    #echo " Starting jupyter notebook..."
+#}
+
+#if [ "$TERM" != dumb ]; then # 명령어라인으로부터 실행시
+    #ipnb "$@"
+#else # GUI환경에서 실행시
+    ##export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
+    ##export CUDA_HOME=/usr/local/cuda
+    ##export PATH="/home/cfd/anaconda3/envs/tensorflow/bin:$PATH"
+    ##cwd=$(zenity --file-selection --title="Choose ipython notebooks directory...")
+    ## Get the aliases and functions
+    ##if [ -f ~/.bashrc ]; then
+        ##. ~/.bashrc
+    ##fi
+    #if [ "$?" = 0 ]; then
+        #notify-send "jupyter Notebook" "Preparing for awesome..."
+        #id=cfd
+        #screen -dmS "jupyter_$id" jupyter-notebook "$cwd/notebooks"
+    #else
+        #notify-send "jupyter Notebook" "Good bye!"
+    #fi
+#fi
