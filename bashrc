@@ -128,6 +128,7 @@ source /$HOME/foam/foam-extend-3.2/etc/bashrc $FOAM_SETTINGS
 #alias fe31='source /$HOME/OpenFOAM/foam-extend-3.1/etc/bashrc $FOAM_SETTINGS'
 #alias fe32='source /$HOME/foam/foam-extend-3.2/etc/bashrc $FOAM_SETTINGS'
 alias tmux='tmux -2' #to support 256 color in terminal
+alias vi='nvim'
 
 #export WM_COMPILE_OPTION=Debug
 export WM_NCOMPPROCS=4
@@ -143,11 +144,7 @@ export WM_NCOMPPROCS=4
 export PATH="/home/cfd/anaconda3/bin:$PATH"
 
 # addd by tensorflow
-#export PATH="/home/cfd/anaconda3/envs/tensorflow/bin:$PATH"
-#export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
-#export CUDA_HOME=/usr/local/cuda
-#source activate tensorflow
-
-# added for pytorch
-source activate pytorch
-
+export PATH="/home/cfd/anaconda3/envs/tensorflow/bin:$PATH"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
+export CUDA_HOME=/usr/local/cuda
+source activate tensorflow

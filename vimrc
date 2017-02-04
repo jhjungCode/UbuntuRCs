@@ -23,9 +23,9 @@ function! s:LetAndMkdir(variable, path) "{{{
     execute printf("let %s = a:path", a:variable)
 endfunction "}}}
 
-call s:LetAndMkdir('&backupdir', $HOME.'/.vim/backup')
-call s:LetAndMkdir('&directory', $HOME.'/.vim/swap')
-call s:LetAndMkdir('&undodir', $HOME.'/.vim/undo')
+call s:LetAndMkdir('&backupdir', $HOME.'/.config/nvim/backup')
+call s:LetAndMkdir('&directory', $HOME.'/.config/nvim/swap')
+call s:LetAndMkdir('&undodir', $HOME.'/.config/nvim/undo')
 
 " Set augroup.
 augroup MyAutoCmd
@@ -50,7 +50,6 @@ syntax on                   " Syntax highlighting
 set mouse=a                 " Automatically enable mouse usage
 set mousehide               " Hide the mouse cursor while typing
 
-set nowrap                      " Do not wrap long lines
 set autoindent                  " Indent at the same level of the previous line
 set shiftwidth=4                " Use indents of 4 spaces
 set expandtab                   " Tabs are spaces, not tabs
@@ -293,11 +292,6 @@ vnoremap > >gv
 " Use more logical mapping (see :h Y)
 nnoremap Y y$
 
-" insert blank line
-nnoremap <silent> <Space>o   :<C-u>for i in range(1, v:count1) \| call append(line('.'),   '') \| endfor \| silent! call repeat#set("<Space>o", v:count1)<CR>
-nnoremap <silent> <Space>O   :<C-u>for i in range(1, v:count1) \| call append(line('.')-1, '') \| endfor \| silent! call repeat#set("<Space>O", v:count1)<CR>
-nnoremap <silent> <S-Space>O :<C-u>for i in range(1, v:count1) \| call append(line('.')-1, '') \| endfor \| silent! call repeat#set("<S-Space>O"), v:count1<CR>
-
 " Easier moving in tabs and windows
 " The lines conflict with the default digraph mapping of <C-K>
 map <C-J> <C-W>j<C-W>_
@@ -310,43 +304,42 @@ map <C-H> <C-W>h<C-W>_
 " plugin
 "-----------------------------------------------------------------------------
 
-call plug#begin('~/.vim/plugged')
-Plug 'junegunn/vim-easy-align'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+call plug#begin()
 Plug 'tomasr/molokai'
-Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'tpope/vim-surround'              "command : ys cs ds
-Plug 'ReplaceWithRegister'             "command : gr
-Plug 'christoomey/vim-titlecase'       "command : gt
-Plug 'christoomey/vim-sort-motion'     "command : gs
-Plug 'tpope/vim-commentary'            "command : gc
-Plug 'christoomey/vim-system-copy'     "command : cp cv
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'kien/ctrlp.vim'
+" Plug 'majutsushi/tagbar'
+Plug 'bfredl/nvim-ipy'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'benekastah/neomake'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-repeat'            "expand . to plugins(vim-surround)
+Plug 'tpope/vim-surround'          "command : ysiw cs ds
+Plug 'ReplaceWithRegister'         "command : gr
+Plug 'christoomey/vim-titlecase'   "command : gt
+Plug 'christoomey/vim-sort-motion' "command : gs
+Plug 'tpope/vim-commentary'        "command : gc
+Plug 'christoomey/vim-system-copy' "command : cp cv
 Plug 'kana/vim-textobj-user'
-Plug 'wellle/targets.vim'              "textobj : a, i, an( in(
-Plug 'michaeljsmith/vim-indent-object' "textobj : ai ii
-Plug 'kana/vim-textobj-line'           "textobj : al il
-"This checks for vim 8.0 or above before installing plugins
-if v:version >= 800
-    Plug 'skywind3000/asyncrun.vim'
-endif
+Plug 'kana/vim-textobj-line'       "textobj : al il
+Plug 'kana/vim-textobj-indent'     "textobj : ai ii
+Plug 'wellle/targets.vim'          "textobj : a, i, an( in(
 call plug#end()
 
 "-----------------------------------------------------------------------------
 " plugin 'setting'
 "-----------------------------------------------------------------------------
+
 " moloaki
-if isdirectory(expand("~/.vim/plugged/molokai"))
+if isdirectory(expand("~/.config/nvim/plugged/molokai"))
     color molokai
 endif
 
 " airline
-if isdirectory(expand("~/.vim/plugged/vim-airline"))
+if isdirectory(expand("~/.config/nvim/plugged/vim-airline"))
     let g:airline_powerline_fonts = 1
     let g:airline_theme = 'powerlineish'
     "let g:airline_left_sep = ''
@@ -379,22 +372,8 @@ if isdirectory(expand("~/.vim/plugged/vim-airline"))
 
 endif
 
-"asyncrun
-if isdirectory(expand("~/.vim/plugged/asyncrun.vim"))
-    :noremap <F9> :call asyncrun#quickfix_toggle(8)<CR>
-    augroup vimrc
-        autocmd QuickFixCmdPost * botright copen 8
-    augroup END
-    if isdirectory(expand("~/.vim/plugged/vim-airline"))
-        let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
-    endif
-    if isdirectory(expand("~/.vim/plugged/vim-fugitive"))
-        command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-    endif
-endif
-
 "nerdtree
-if isdirectory(expand("~/.vim/plugged/nerdtree"))
+if isdirectory(expand("~/.config/nvim/plugged/nerdtree"))
     noremap <C-e> :NERDTreeToggle<CR>
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
     let NERDTreeShowBookmarks=1
@@ -407,15 +386,16 @@ if isdirectory(expand("~/.vim/plugged/nerdtree"))
 endif
 
 "ctrlp
-if isdirectory(expand("~/.vim/plugged/ctrlp.vim/"))
+if isdirectory(expand("~/.config/nvim/plugged/ctrlp.vim/"))
     let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+    nnoremap <C-p><C-p> :CtrlPBuffer<CR>
 endif
 
 "syntastic
-if isdirectory(expand("~/.vim/plugged/syntastic"))
+if isdirectory(expand("~/.config/nvim/plugged/syntastic"))
     set statusline+=%#warningmsg#
     set statusline+=%{SyntasticStatuslineFlag()}
     set statusline+=%*
@@ -426,7 +406,7 @@ if isdirectory(expand("~/.vim/plugged/syntastic"))
 endif
 
 " vim-Easy-align
-if isdirectory(expand("~/.vim/plugged/vim-easy-align"))
+if isdirectory(expand("~/.config/nvim/plugged/vim-easy-align"))
   " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
   xmap <Enter> <Plug>(EasyAlign)
   " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
@@ -434,21 +414,14 @@ if isdirectory(expand("~/.vim/plugged/vim-easy-align"))
 endif
 
 " Tagbar
-if isdirectory(expand("~/.vim/plugged/tagbar"))
+if isdirectory(expand("~/.config/nvim/plugged/tagbar"))
     nnoremap <F8> :TagbarToggle<CR>
 endif
 
 " YouCompleteMe {
-if isdirectory(expand("~/.vim/plugged/YouCompleteMe"))
-    let g:acp_enableAtStartup = 0
-
+if isdirectory(expand("~/.config/nvim/plugged/YouCompleteMe"))
     " enable completion from tags
     let g:ycm_collect_identifiers_from_tags_files = 1
-
-    " remap Ultisnips for compatibility for YCM
-    let g:UltiSnipsExpandTrigger = '<C-j>'
-    let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-    let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
     " Enable omni completion.
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
