@@ -215,28 +215,24 @@ endif
 " Key (re)Mappings
 "-----------------------------------------------------------------------------
 
-" The default leader is '\', but many people prefer ',' as it's in a standard
-" location. To override this behavior and set it back to '\' (or any other
-" character) add the following to your .vimrc.before.local file:
-nnoremap \ ,
-let mapleader = ','
-let maplocalleader = '_'
+" " The default leader is '\', but many people prefer ',' as it's in a standard
+" " location. To override this behavior and set it back to '\' (or any other
+" " character) add the following to your .vimrc.before.local file:
+" nnoremap \ ,
+" let mapleader = ','
+" let maplocalleader = '_'
+let mapleader = "\<Space>"
 
-" [Space]: Other useful commands "{{{
-" Smart space mapping.
-" Notice: when starting other <Space> mappings in noremap, disappeared [Space].
-nmap  <Space>   [Space]
-xmap  <Space>   [Space]
-nnoremap  [Space]   <Nop>
-xnoremap  [Space]   <Nop>
+" " swap ; and :
+" nnoremap ; :
+" vnoremap ; :
+" nnoremap q; q:
+" vnoremap q; q:
+" nnoremap : ;
+" vnoremap : ;
 
-" swap ; and :
-nnoremap ; :
-vnoremap ; :
-nnoremap q; q:
-vnoremap q; q:
-nnoremap : ;
-vnoremap : ;
+" prevent popping up stupid window 
+map q: :q
 
 " switch j,k and gj,gk
 nnoremap j gj
@@ -248,12 +244,15 @@ nnoremap gk k
 vnoremap gj j
 vnoremap gk k
 
-" key map ^,$ to <Space>h,l. Because ^ and $ is difficult to type and damage little finger!!!
-noremap <Space>h ^
-noremap <Space>l $
+" key map ^,$ to <leader>h,l. Because ^ and $ is difficult to type and damage little finger!!!
+noremap <leader>h ^
+noremap <leader>l $
 
 " same as above. but don't use noremap because want to map to matchit plugin
-map <Space>n %
+map <leader>n %
+
+" save a file
+nnoremap <leader>w :w<CR>
 
 " insert mode
 " undoable C-w,C-u
@@ -333,6 +332,7 @@ call plug#end()
 " plugin 'setting'
 "-----------------------------------------------------------------------------
 
+
 " moloaki
 if isdirectory(expand("~/.config/nvim/plugged/molokai"))
     color molokai
@@ -374,7 +374,7 @@ endif
 
 "nerdtree
 if isdirectory(expand("~/.config/nvim/plugged/nerdtree"))
-    noremap <C-e> :NERDTreeToggle<CR>
+    noremap <leader>e :NERDTreeToggle<CR>
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
     let NERDTreeShowBookmarks=1
     let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
@@ -391,7 +391,8 @@ if isdirectory(expand("~/.config/nvim/plugged/ctrlp.vim/"))
     let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
-    nnoremap <C-p><C-p> :CtrlPBuffer<CR>
+    nnoremap <leader>p :CtrlPBuffer<CR>
+    nnoremap <leader>o :CtrlP<CR>
 endif
 
 "syntastic

@@ -144,7 +144,7 @@ export WM_NCOMPPROCS=4
 export PATH="/home/cfd/anaconda3/bin:$PATH"
 
 # addd by tensorflow
-export PATH="/home/cfd/anaconda3/envs/tensorflow/bin:$PATH"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
-export CUDA_HOME=/usr/local/cuda
-source activate tensorflow
+# export PATH="/home/cfd/anaconda3/envs/tensorflow/bin:$PATH"
+# export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
+# export CUDA_HOME=/usr/local/cuda
+# source activate tensorflow
