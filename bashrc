@@ -119,6 +119,9 @@ export PATH=$PATH:~/UbuntuRCs/bin
 #source /home/cfd/OpenFOAM/OpenFOAM-2.3.x/etc/bashrc
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export CUDA_HOME=/usr/local/cuda-8.0
+export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 #source /$HOME/OpenFOAM/OpenFOAM-2.3.x/etc/bashrc $FOAM_SETTINGS
 #source /$HOME/foam/foam-extend-3.1/etc/bashrc $FOAM_SETTINGS
@@ -142,7 +145,6 @@ export WM_NCOMPPROCS=4
 
 # added by Anaconda3 2.4.0 installer
 export PATH="/home/cfd/anaconda3/bin:$PATH"
-
 # addd by tensorflow
 # export PATH="/home/cfd/anaconda3/envs/tensorflow/bin:$PATH"
 # export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"

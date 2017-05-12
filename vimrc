@@ -32,6 +32,10 @@ augroup MyAutoCmd
     autocmd!
 augroup END
 
+function! ImInActivate()
+    call system('fcitx-remote -c')
+endfunction
+inoremap <silent> <C-[> <ESC>:call ImInActivate()<CR>
 
 "-----------------------------------------------------------------------------
 " General
@@ -293,11 +297,16 @@ nnoremap Y y$
 
 " Easier moving in tabs and windows
 " The lines conflict with the default digraph mapping of <C-K>
-map <C-J> <C-W>j<C-W>_
-map <C-K> <C-W>k<C-W>_
-map <C-L> <C-W>l<C-W>_
-map <C-H> <C-W>h<C-W>_
-
+if has('nvim')
+    :tnoremap <A-h> <C-\><C-n><C-w>h<C-W>_
+    :tnoremap <A-j> <C-\><C-n><C-w>j<C-W>_
+    :tnoremap <A-k> <C-\><C-n><C-w>k<C-W>_
+    :tnoremap <A-l> <C-\><C-n><C-w>l<C-W>_
+endif
+:nnoremap <A-h> <C-w>h<C-W>_
+:nnoremap <A-j> <C-w>j<C-W>_
+:nnoremap <A-k> <C-w>k<C-W>_
+:nnoremap <A-l> <C-w>l<C-W>_
 
 "-----------------------------------------------------------------------------
 " plugin
@@ -321,9 +330,7 @@ Plug 'ReplaceWithRegister'         "command : gr
 Plug 'christoomey/vim-titlecase'   "command : gt
 Plug 'christoomey/vim-sort-motion' "command : gs
 Plug 'tpope/vim-commentary'        "command : gc
-Plug 'christoomey/vim-system-copy' "command : cp cv
 Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-line'       "textobj : al il
 Plug 'kana/vim-textobj-indent'     "textobj : ai ii
 Plug 'wellle/targets.vim'          "textobj : a, i, an( in(
 call plug#end()
@@ -449,3 +456,9 @@ if isdirectory(expand("~/.config/nvim/plugged/YouCompleteMe"))
     " especially when splits are used.
     set completeopt-=preview
 endif
+
+" nvim-ipy
+if isdirectory(expand("~/.config/nvim/plugged/nvim-ipy"))
+    let g:ipy_truncate_input = 1
+endif
+
