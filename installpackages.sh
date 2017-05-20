@@ -14,3 +14,6 @@ pip install neovim
 #insall pytorch
 conda install pytorch torchvision cuda80 -c soumith
 
+#install neovim
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

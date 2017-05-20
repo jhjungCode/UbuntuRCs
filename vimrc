@@ -114,7 +114,8 @@ set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 set colorcolumn=79
 set ttyfast
-let &showbreak = '+++ '
+"let &showbreak = '+++ '
+let &showbreak = ''
 highlight ColorColumn ctermbg=darkred guibg=darkred
 
 let g:rehash256 = 1
@@ -311,7 +312,6 @@ endif
 "-----------------------------------------------------------------------------
 " plugin
 "-----------------------------------------------------------------------------
-
 call plug#begin()
 Plug 'tomasr/molokai'
 Plug 'vim-airline/vim-airline'
@@ -324,6 +324,9 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'benekastah/neomake'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/vim-easy-align'
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
 Plug 'tpope/vim-repeat'            "expand . to plugins(vim-surround)
 Plug 'tpope/vim-surround'          "command : ysiw cs ds
 Plug 'ReplaceWithRegister'         "command : gr
@@ -338,7 +341,6 @@ call plug#end()
 "-----------------------------------------------------------------------------
 " plugin 'setting'
 "-----------------------------------------------------------------------------
-
 
 " moloaki
 if isdirectory(expand("~/.config/nvim/plugged/molokai"))
@@ -461,4 +463,32 @@ endif
 if isdirectory(expand("~/.config/nvim/plugged/nvim-ipy"))
     let g:ipy_truncate_input = 1
 endif
+" vim-markdown
+if isdirectory(expand("~/.config/nvim/plugged/vim-markdown"))
+    let g:vim_markdown_folding_disabled = 1
+    let g:vim_markdown_emphasis_multiline = 0
+    let g:vim_markdown_conceal = 0
+endif
 
+" markdown-preview
+if isdirectory(expand("~/.config/nvim/plugged/markdown-preview.vim"))
+    nmap gm :MarkdownPreview<CR>
+    let g:mkdp_path_to_chrome = "google-chrome"
+    " path to the chrome or the command to open chrome(or other modern browsers)
+    let g:mkdp_auto_start = 0
+    " set to 1, the vim will open the preview window once enter the markdown
+    " buffer
+    let g:mkdp_auto_open = 0
+    " set to 1, the vim will auto open preview window when you edit the
+    " markdown file
+    let g:mkdp_auto_close = 1
+    " set to 1, the vim will auto close current preview window when change
+    " from markdown buffer to another buffer
+    let g:mkdp_refresh_slow = 1
+    " set to 1, the vim will just refresh markdown when save the buffer or
+    " leave from insert mode, default 0 is auto refresh markdown as you edit or
+    " move the cursor
+    let g:mkdp_command_for_global = 0
+    " set to 1, the MarkdownPreview command can be use for all files,
+    " by default it just can be use in markdown file
+endif

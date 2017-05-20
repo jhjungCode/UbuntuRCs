@@ -109,6 +109,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# disable ctrl-s ctrl-q
+stty -ixon
+
 # add ~/bin path
 export PATH=$PATH:~/UbuntuRCs/bin
 
