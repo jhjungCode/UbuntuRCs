@@ -8,8 +8,7 @@ wmctrl xsel cmake python-dev python3-dev clang
 #install neovim
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt-get update
-sudo apt-get install neovim
-pip install neovim
+sudo pip install neovim
 
 #insall pytorch
 conda install pytorch torchvision cuda80 -c soumith
