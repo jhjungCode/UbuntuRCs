@@ -329,7 +329,7 @@ Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
 Plug 'tpope/vim-repeat'            "expand . to plugins(vim-surround)
 Plug 'tpope/vim-surround'          "command : ysiw cs ds
-Plug 'ReplaceWithRegister'         "command : gr
+" Plug 'ReplaceWithRegister'         "command : gr
 Plug 'christoomey/vim-titlecase'   "command : gt
 Plug 'christoomey/vim-sort-motion' "command : gs
 Plug 'tpope/vim-commentary'        "command : gc
