@@ -2,6 +2,7 @@
 127.0.1.1      jhjung
 152.168.90.101 node12
 152.168.1.186  pdm.sjku.co.kr
+210.89.182.140 tunnel
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     ip6-localhost ip6-loopback

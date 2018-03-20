@@ -1,0 +1,1 @@
+slack-cleaner --token xoxp-266833662295-265749394258-266474786305-486a46109656f7e3b14993c97faa4412 --message --channel logs --bot --perform

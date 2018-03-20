@@ -1,2 +1,3 @@
+sudo cp -r D2Coding-Ver1.3-20171129 /usr/share/fonts/truetype/
 sudo cp -r Window /usr/share/fonts/truetype/
 sudo fc-cache -vf

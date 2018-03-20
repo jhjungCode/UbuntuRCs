@@ -1,0 +1,2 @@
+#/bin/bash
+autossh -fN -R 1024:localhost:22 cfd@tunnel -p 1025

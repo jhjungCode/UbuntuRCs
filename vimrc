@@ -135,7 +135,7 @@ set hidden                          " Allow buffer switching without saving
 set iskeyword-=.                    " '.' is an end of word designator
 set iskeyword-=#                    " '#' is an end of word designator
 set iskeyword-=-                    " '-' is an end of word designator
-set timeoutlen=1000 ttimeoutlen=10
+set timeoutlen=1000 ttimeoutlen=0
 
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message
@@ -223,10 +223,10 @@ endif
 " " The default leader is '\', but many people prefer ',' as it's in a standard
 " " location. To override this behavior and set it back to '\' (or any other
 " " character) add the following to your .vimrc.before.local file:
-" nnoremap \ ,
+nnoremap \ ,
+let mapleader = "\<Space>"
 " let mapleader = ','
 " let maplocalleader = '_'
-let mapleader = "\<Space>"
 
 " " swap ; and :
 " nnoremap ; :
@@ -299,6 +299,7 @@ nnoremap Y y$
 " Easier moving in tabs and windows
 " The lines conflict with the default digraph mapping of <C-K>
 if has('nvim')
+    autocmd BufEnter term://* startinsert
     :tnoremap <A-h> <C-\><C-n><C-w>h<C-W>_
     :tnoremap <A-j> <C-\><C-n><C-w>j<C-W>_
     :tnoremap <A-k> <C-\><C-n><C-w>k<C-W>_
@@ -319,17 +320,12 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'kien/ctrlp.vim'
 " Plug 'majutsushi/tagbar'
-Plug 'bfredl/nvim-ipy'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-Plug 'benekastah/neomake'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/vim-easy-align'
-Plug 'plasticboy/vim-markdown'
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
+Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-repeat'            "expand . to plugins(vim-surround)
 Plug 'tpope/vim-surround'          "command : ysiw cs ds
-Plug 'ReplaceWithRegister'         "command : gr
 Plug 'christoomey/vim-titlecase'   "command : gt
 Plug 'christoomey/vim-sort-motion' "command : gs
 Plug 'tpope/vim-commentary'        "command : gc
@@ -383,14 +379,14 @@ endif
 
 "nerdtree
 if isdirectory(expand("~/.config/nvim/plugged/nerdtree"))
-    noremap <leader>e :NERDTreeToggle<CR>
+    noremap <Space>e :NERDTreeToggle<CR>
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
     let NERDTreeShowBookmarks=1
     let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
     let NERDTreeChDirMode=0
     let NERDTreeQuitOnOpen=1
     let NERDTreeMouseMode=2
-    let NERDTreeShowHidden=1
+    let NERDTreeShowHidden=0
     let NERDTreeKeepTreeInNewTab=1
 endif
 
@@ -398,8 +394,8 @@ endif
 if isdirectory(expand("~/.config/nvim/plugged/ctrlp.vim/"))
     let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+                \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.ipynb_checkpoints$\|\.vscode$',
+                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.wav\|\.npz' }
     nnoremap <leader>p :CtrlPBuffer<CR>
     nnoremap <leader>o :CtrlP<CR>
 endif
@@ -459,36 +455,3 @@ if isdirectory(expand("~/.config/nvim/plugged/YouCompleteMe"))
     set completeopt-=preview
 endif
 
-" nvim-ipy
-if isdirectory(expand("~/.config/nvim/plugged/nvim-ipy"))
-    let g:ipy_truncate_input = 1
-endif
-" vim-markdown
-if isdirectory(expand("~/.config/nvim/plugged/vim-markdown"))
-    let g:vim_markdown_folding_disabled = 1
-    let g:vim_markdown_emphasis_multiline = 0
-    let g:vim_markdown_conceal = 0
-endif
-
-" markdown-preview
-if isdirectory(expand("~/.config/nvim/plugged/markdown-preview.vim"))
-    nmap gm :MarkdownPreview<CR>
-    let g:mkdp_path_to_chrome = "google-chrome"
-    " path to the chrome or the command to open chrome(or other modern browsers)
-    let g:mkdp_auto_start = 0
-    " set to 1, the vim will open the preview window once enter the markdown
-    " buffer
-    let g:mkdp_auto_open = 0
-    " set to 1, the vim will auto open preview window when you edit the
-    " markdown file
-    let g:mkdp_auto_close = 1
-    " set to 1, the vim will auto close current preview window when change
-    " from markdown buffer to another buffer
-    let g:mkdp_refresh_slow = 1
-    " set to 1, the vim will just refresh markdown when save the buffer or
-    " leave from insert mode, default 0 is auto refresh markdown as you edit or
-    " move the cursor
-    let g:mkdp_command_for_global = 0
-    " set to 1, the MarkdownPreview command can be use for all files,
-    " by default it just can be use in markdown file
-endif

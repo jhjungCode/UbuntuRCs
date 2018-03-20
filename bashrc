@@ -115,41 +115,31 @@ stty -ixon
 # add ~/bin path
 export PATH=$PATH:~/UbuntuRCs/bin
 
-#source /home/cfd/OpenFOAM/OpenFOAM-1.6-ext/etc/bashrc
-#source /home/cfd/OpenFOAM/foam-extend-3.1/etc/bashrc
-#source /opt/openfoam220/etc/bashrc
-#source /opt/openfoam230/etc/bashrc
-#source /home/cfd/OpenFOAM/OpenFOAM-2.3.x/etc/bashrc
-
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export CUDA_HOME=/usr/local/cuda-8.0
 export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-#source /$HOME/OpenFOAM/OpenFOAM-2.3.x/etc/bashrc $FOAM_SETTINGS
-#source /$HOME/foam/foam-extend-3.1/etc/bashrc $FOAM_SETTINGS
-source /$HOME/foam/foam-extend-3.2/etc/bashrc $FOAM_SETTINGS
-
-#alias of23x='source /$HOME/OpenFOAM/OpenFOAM-2.3.x/etc/bashrc $FOAM_SETTINGS'
-#alias fe31='source /$HOME/OpenFOAM/foam-extend-3.1/etc/bashrc $FOAM_SETTINGS'
-#alias fe32='source /$HOME/foam/foam-extend-3.2/etc/bashrc $FOAM_SETTINGS'
-alias tmux='tmux -2' #to support 256 color in terminal
-alias vi='nvim'
-
+source /$HOME/foam/foam-extend-4.0/etc/bashrc $FOAM_SETTINGS
 #export WM_COMPILE_OPTION=Debug
 export WM_NCOMPPROCS=4
 #export WM_SCHEDULER=wmakeScheduler
 #export WM_HOSTS="$HOSTNAME:32"
 #export WM_NCOMPPROCS=$($WM_SCHEDULER -count)
 #export WM_COLOURS="black blue green cyan red magenta yellow" 
+alias app='cd $WM_PROJECT_USER_DIR/applications'
+
+alias vi='nvim'
 
 # added by Anaconda2 2.4.0 installer
-#export PATH="/home/cfd/anaconda2/bin:$PATH"
-
+# export PATH="/home/cfd/anaconda2/bin:$PATH"
 # added by Anaconda3 2.4.0 installer
 export PATH="/home/cfd/anaconda3/bin:$PATH"
+
 # addd by tensorflow
 # export PATH="/home/cfd/anaconda3/envs/tensorflow/bin:$PATH"
 # export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64"
 # export CUDA_HOME=/usr/local/cuda
 # source activate tensorflow
+
+export GOOGLE_APPLICATION_CREDENTIALS="/home/cfd/tacotron-inje.json"
