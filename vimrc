@@ -454,4 +454,3 @@ if isdirectory(expand("~/.config/nvim/plugged/YouCompleteMe"))
     " especially when splits are used.
     set completeopt-=preview
 endif
-
