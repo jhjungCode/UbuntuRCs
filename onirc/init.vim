@@ -32,16 +32,25 @@ augroup MyAutoCmd
     autocmd!
 augroup END
 
-function! ImInActivate()
-    call system('fcitx-remote -c')
-endfunction
-inoremap <silent> <C-[> <ESC>:call ImInActivate()<CR>
-
 "-----------------------------------------------------------------------------
 " General
 "-----------------------------------------------------------------------------
 " Setting of the encoding to use for a save and reading.
 " Make it normal in UTF-8 in Unix.
+" Setting up the directories
+set backup                  " Backups are nice ...
+if has('persistent_undo')
+    set undofile                " So is persistent undo ...
+    set undolevels=1000         " Maximum number of changes that can be undone
+    set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
+endif
+if has('unix')
+    set backupskip=/tmp/*,/private/tmp/*
+endif
+
+set rnu
+set swapfile
+
 if &compatible
   set nocompatible
 endif
@@ -72,24 +81,6 @@ highlight clear SignColumn      " SignColumn should match background
 highlight clear LineNr          " Current line number row will have same background color in relative mode
 "highlight clear CursorLineNr    " Remove highlight color from current line number
 
-if has('cmdline_info')
-    set ruler                   " Show the ruler
-    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-    set showcmd                 " Show partial commands in status line and
-    " Selected characters/lines in visual mode
-endif
-
-if has('statusline')
-    set laststatus=2
-
-    " Broken down into easily includeable segments
-    set statusline=%<%f\                     " Filename
-    set statusline+=%w%h%m%r                 " Options
-    set statusline+=\ [%{&ff}/%Y]            " Filetype
-    set statusline+=\ [%{getcwd()}]          " Current dir
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-endif
-
 set backspace=indent,eol,start  " Backspace for dummies
 set linespace=0                 " No extra spaces between rows
 set nu                          " Line numbers on
@@ -119,102 +110,6 @@ let &showbreak = ''
 highlight ColorColumn ctermbg=darkred guibg=darkred
 
 let g:rehash256 = 1
-
-
-" Automaticaly changes with current file directory when new buffer is
-" opened, limitaion for files
-"autocmd BufEnter * if bufname('') !~ '^[A-Za-z0-9]*:\(//\|\\\\\)' | lcd %:p:h | endif
-
-"set autowrite                       " Automatically write a file when leaving a modified buffer
-set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
-set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
-set virtualedit=onemore             " Allow for cursor beyond last character
-set history=1000                    " Store a ton of history (default is 20)
-set nospell                         " Spell checking off
-set hidden                          " Allow buffer switching without saving
-set iskeyword-=.                    " '.' is an end of word designator
-set iskeyword-=#                    " '#' is an end of word designator
-set iskeyword-=-                    " '-' is an end of word designator
-set timeoutlen=1000 ttimeoutlen=0
-
-" Instead of reverting the cursor to the last position in the buffer, we
-" set it to the first line when editing a git commit message
-au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-
-" http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
-" Restore cursor to file position in previous editing session
-function! ResCur()
-    if line("'\"") <= line("$")
-        normal! g`"
-        return 1
-    endif
-endfunction
-
-augroup resCur
-    autocmd!
-    autocmd BufWinEnter * call ResCur()
-augroup END
-
-" Setting up the directories
-set backup                  " Backups are nice ...
-if has('persistent_undo')
-    set undofile                " So is persistent undo ...
-    set undolevels=1000         " Maximum number of changes that can be undone
-    set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
-endif
-if has('unix')
-    set backupskip=/tmp/*,/private/tmp/*
-endif
-
-" Add exclusions to mkview and loadview
-" eg: *.*, svn-commit.tmp
-let g:skipview_files = [
-            \ '\[example pattern\]'
-            \ ]
-
-if v:version >= 703
-    set rnu
-else
-    set nu
-endif
-set swapfile
-
-"-----------------------------------------------------------------------------
-" Language & OS
-"-----------------------------------------------------------------------------
-set background=dark
-
-if has('multi_byte_ime')
-    set iminsert=0 imsearch=0
-    inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
-endif
-
-" Setting of terminal encoding."{{{
-if has("multi_byte")
-    setglobal fileencoding=utf-8
-    set fileencoding=utf-8
-    set fileencodings=ucs-bom,utf-8,cp949,euc-kr`
-    set termencoding=utf-8
-    let $LANG = "ko_KR.UTF-8"
-endif
-
-" GVIM- (here instead of .gvimrc)
-if has('gui_running')
-    set guioptions-=T           " Remove the toolbar
-    set lines=40                " 40 lines of text instead of 24
-    if !exists("g:spf13_no_big_font")
-        if IsLinux() && has("gui_running")
-            set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Book\ 12
-        elseif IsMac() && has("gui_running")
-            set guifont=Consolas\ for\ Powerline:11,Andale\ Mono\ Regular:h12
-        endif
-    endif
-else
-    if &term == 'xterm' || &term == 'screen'
-        set t_Co=256            " Enable 256 colors
-    endif
-    "set term=builtin_ansi       " Make arrow and other keys work
-endif
 
 "-----------------------------------------------------------------------------
 " Key (re)Mappings
@@ -294,21 +189,13 @@ nnoremap Y y$
 " plugin
 "-----------------------------------------------------------------------------
 call plug#begin()
-Plug 'tomasr/molokai'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'kien/ctrlp.vim'
 " Plug 'majutsushi/tagbar'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-Plug 'tpope/vim-fugitive'
 Plug 'junegunn/vim-easy-align'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'tpope/vim-repeat'            "expand . to plugins(vim-surround)
-Plug 'tpope/vim-surround'          "command : ysiw cs ds
 Plug 'christoomey/vim-titlecase'   "command : gt
 Plug 'christoomey/vim-sort-motion' "command : gs
-Plug 'tpope/vim-commentary'        "command : gc
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'     "textobj : ai ii
 Plug 'wellle/targets.vim'          "textobj : a, i, an( in(
@@ -317,46 +204,6 @@ call plug#end()
 "-----------------------------------------------------------------------------
 " plugin 'setting'
 "-----------------------------------------------------------------------------
-
-" moloaki
-if isdirectory(expand("~/.config/nvim/plugged/molokai"))
-    color molokai
-endif
-
-" airline
-if isdirectory(expand("~/.config/nvim/plugged/vim-airline"))
-    let g:airline_powerline_fonts = 1
-    let g:airline_theme = 'powerlineish'
-    "let g:airline_left_sep = ''
-    "let g:airline_right_sep = ''
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
-    " unicode symbols
-    let g:airline_left_sep = '»'
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '«'
-    let g:airline_right_sep = '◀'
-    let g:airline_symbols.linenr = '␊'
-    let g:airline_symbols.linenr = '␤'
-    let g:airline_symbols.linenr = '¶'
-    let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.paste = 'ρ'
-    let g:airline_symbols.paste = 'Þ'
-    let g:airline_symbols.paste = '∥'
-    let g:airline_symbols.whitespace = 'Ξ'
-
-    " powerline symbols
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
-    let g:airline_symbols.branch = ''
-    let g:airline_symbols.readonly = ''
-    let g:airline_symbols.linenr = ''
-
-endif
-
 "nerdtree
 if isdirectory(expand("~/.config/nvim/plugged/nerdtree"))
     noremap <Space>e :NERDTreeToggle<CR>
@@ -370,27 +217,6 @@ if isdirectory(expand("~/.config/nvim/plugged/nerdtree"))
     let NERDTreeKeepTreeInNewTab=1
 endif
 
-"ctrlp
-if isdirectory(expand("~/.config/nvim/plugged/ctrlp.vim/"))
-    let g:ctrlp_working_path_mode = 'ra'
-    let g:ctrlp_custom_ignore = {
-                \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.ipynb_checkpoints$\|\.vscode$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$\|\.wav\|\.npz' }
-    nnoremap <leader>p :CtrlPBuffer<CR>
-    nnoremap <leader>o :CtrlP<CR>
-endif
-
-"syntastic
-if isdirectory(expand("~/.config/nvim/plugged/syntastic"))
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
-endif
-
 " vim-Easy-align
 if isdirectory(expand("~/.config/nvim/plugged/vim-easy-align"))
   " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -402,35 +228,4 @@ endif
 " Tagbar
 if isdirectory(expand("~/.config/nvim/plugged/tagbar"))
     nnoremap <F8> :TagbarToggle<CR>
-endif
-
-" YouCompleteMe {
-if isdirectory(expand("~/.config/nvim/plugged/YouCompleteMe"))
-    " enable completion from tags
-    let g:ycm_collect_identifiers_from_tags_files = 1
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
-    " Haskell post write lint and check with ghcmod
-    " $ `cabal install ghcmod` if missing and ensure
-    " ~/.cabal/bin is in your $PATH.
-    if !executable("ghcmod")
-        autocmd BufWritePost *.hs GhcModCheckAndLintAsync
-    endif
-
-    if has('conceal')
-        set conceallevel=2 concealcursor=i
-    endif
-
-    " Disable the neosnippet preview candidate window
-    " When enabled, there can be too much visual noise
-    " especially when splits are used.
-    set completeopt-=preview
 endif

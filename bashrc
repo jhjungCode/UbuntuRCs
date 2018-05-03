@@ -130,6 +130,7 @@ export WM_NCOMPPROCS=4
 alias app='cd $WM_PROJECT_USER_DIR/applications'
 
 alias vi='nvim'
+alias pro='cd ~/Projects'
 
 # added by Anaconda2 2.4.0 installer
 # export PATH="/home/cfd/anaconda2/bin:$PATH"
