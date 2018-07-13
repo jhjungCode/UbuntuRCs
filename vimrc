@@ -120,7 +120,10 @@ highlight ColorColumn ctermbg=darkred guibg=darkred
 
 let g:rehash256 = 1
 
+let g:netrw_banner=0
+let g:netrw_altv=1
 
+set tags=tags;
 " Automaticaly changes with current file directory when new buffer is
 " opened, limitaion for files
 "autocmd BufEnter * if bufname('') !~ '^[A-Za-z0-9]*:\(//\|\\\\\)' | lcd %:p:h | endif
@@ -210,7 +213,7 @@ if has('gui_running')
         endif
     endif
 else
-    if &term == 'xterm' || &term == 'screen'
+    if &term == 'xterm' || &term == 'screen-256color'
         set t_Co=256            " Enable 256 colors
     endif
     "set term=builtin_ansi       " Make arrow and other keys work
@@ -290,6 +293,8 @@ vnoremap > >gv
 " Use more logical mapping (see :h Y)
 nnoremap Y y$
 
+" Open newtr
+noremap <Space>e :e .<CR>
 "-----------------------------------------------------------------------------
 " plugin
 "-----------------------------------------------------------------------------
@@ -297,7 +302,7 @@ call plug#begin()
 Plug 'tomasr/molokai'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'kien/ctrlp.vim'
 " Plug 'majutsushi/tagbar'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
@@ -357,18 +362,18 @@ if isdirectory(expand("~/.config/nvim/plugged/vim-airline"))
 
 endif
 
-"nerdtree
-if isdirectory(expand("~/.config/nvim/plugged/nerdtree"))
-    noremap <Space>e :NERDTreeToggle<CR>
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    let NERDTreeShowBookmarks=1
-    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-    let NERDTreeChDirMode=0
-    let NERDTreeQuitOnOpen=1
-    let NERDTreeMouseMode=2
-    let NERDTreeShowHidden=0
-    let NERDTreeKeepTreeInNewTab=1
-endif
+""nerdtree
+"if isdirectory(expand("~/.config/nvim/plugged/nerdtree"))
+"    noremap <Space>e :NERDTreeToggle<CR>
+"    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"    let NERDTreeShowBookmarks=1
+"    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+"    let NERDTreeChDirMode=0
+"    let NERDTreeQuitOnOpen=1
+"    let NERDTreeMouseMode=2
+"    let NERDTreeShowHidden=0
+"    let NERDTreeKeepTreeInNewTab=1
+"endif
 
 "ctrlp
 if isdirectory(expand("~/.config/nvim/plugged/ctrlp.vim/"))
