@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 sudo apt install python3-pip
+sudo apt install build-essential cmake python3-dev
 
 #install neovim
 sudo add-apt-repository ppa:neovim-ppa/unstable
